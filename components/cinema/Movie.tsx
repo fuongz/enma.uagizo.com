@@ -1,12 +1,14 @@
 import { FC, useEffect, useState } from 'react'
 import { Icon } from '@iconify/react'
+import { MovieScheduleItem } from './MovieScheduleItem'
 
 interface MovieProps {
   schedule: Schedule
 }
 
 export const MovieComponent: FC<MovieProps> = (props: MovieProps) => {
-  const [dates, setDates] = useState<ScheduleDate[] | any>([])
+  const [currentDate, setCurrentDate] = useState<ScheduleDate[] | any>([])
+  const [currentBundle, setCurrentBundle] = useState<ScheduleDateBundle>({} as ScheduleDateBundle)
 
   const { schedule } = props
 
@@ -16,8 +18,15 @@ export const MovieComponent: FC<MovieProps> = (props: MovieProps) => {
   }
 
   useEffect(() => {
-    const dates: ScheduleDate | any = schedule?.dates && schedule?.dates.length > 0 ? schedule?.dates[0] : null
-    setDates(dates)
+    const currentDate: ScheduleDate | any = schedule?.dates && schedule?.dates.length > 0 ? schedule?.dates[0] : null
+    let currentBundle = currentDate?.bundles && currentDate?.bundles.length > 0 ? currentDate?.bundles.find((bundle: ScheduleDateBundle) => bundle.caption === 'voice') : null
+
+    if (currentBundle === null || currentBundle === undefined) {
+      currentBundle = currentDate?.bundles.find((bundle: ScheduleDateBundle) => bundle.caption === 'sub')
+    }
+
+    setCurrentBundle(currentBundle)
+    setCurrentDate(currentDate)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -50,7 +59,17 @@ export const MovieComponent: FC<MovieProps> = (props: MovieProps) => {
 
           {schedule.duration && <span className="text-zinc-500 block"> {schedule.duration} phút </span>}
 
-          {dates && dates.bundles && dates.bundles.length > 0 && <>OK</>}
+          {currentBundle && (
+            <>
+              <p className="mt-4 text-sm text-zinc-300 tracking-tight font-semibold">{currentDate.showDate}</p>
+              <p className="text-xs mt-2 text-zinc-400 font-semibold">
+                {currentBundle.caption === 'voice' ? 'Lồng tiếng:' : 'Vietsub:'} <span className="bg-indigo-800 rounded-sm px-1.5 py-0.5 ml-1">{currentBundle.version}</span>
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
+                {currentBundle && currentBundle?.sessions?.map((session: ScheduleDateBundleSession) => <MovieScheduleItem key={session.id} session={session} />)}
+              </div>
+            </>
+          )}
         </div>
       ) : (
         <></>
