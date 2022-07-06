@@ -63,7 +63,8 @@ export const MovieComponent: FC<MovieProps> = (props: MovieProps) => {
             <>
               <p className="mt-4 text-sm text-zinc-300 tracking-tight font-semibold">{currentDate.showDate}</p>
               <p className="text-xs mt-2 text-zinc-400 font-semibold">
-                {currentBundle.caption === 'voice' ? 'Lồng tiếng:' : 'Vietsub:'} <span className="bg-indigo-800 rounded-sm px-1.5 py-0.5 ml-1">{currentBundle.version}</span>
+                <span className="bg-zinc-800 rounded-sm px-1.5 py-0.5">{currentBundle.caption === 'voice' ? 'Thuyết minh' : 'Phụ đề'}</span>
+                <span className="bg-indigo-800 rounded-sm px-1.5 py-0.5 ml-1">{currentBundle.version}</span>
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
                 {currentBundle && currentBundle?.sessions?.map((session: ScheduleDateBundleSession) => <MovieScheduleItem key={session.id} session={session} />)}

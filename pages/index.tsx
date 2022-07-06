@@ -34,8 +34,8 @@ const Home: NextPage = () => {
       <main>
         <div className="container mx-auto px-4 2xl:px-0 py-16">
           <div className="text-center">
-            <h1 className="text-4xl leading-none font-medium text-center text-white text-opacity-90 tracking-tight mb-2">Galaxy Linh Trung</h1>
-            <p className="text-white text-xl text-opacity-50 tracking-tight mb-10">Lịch chiếu phim tại cụm rạp Galaxy Linh Trung</p>
+            <h1 className="text-3xl lg:text-4xl leading-none font-medium text-center text-white text-opacity-90 tracking-tight mb-2">Galaxy Linh Trung</h1>
+            <p className="text-white text-sm lg:text-xl text-opacity-50 tracking-tight mb-10">Lịch chiếu phim tại cụm rạp Galaxy Linh Trung</p>
           </div>
 
           <LoadingComponent isLoading={isLoading}>
