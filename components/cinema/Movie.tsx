@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { Icon } from '@iconify/react'
 import { MovieScheduleItem } from './MovieScheduleItem'
+import { ModalComponent } from '../common/Modal'
 
 interface MovieProps {
   schedule: Schedule
@@ -9,6 +10,7 @@ interface MovieProps {
 export const MovieComponent: FC<MovieProps> = (props: MovieProps) => {
   const [currentDate, setCurrentDate] = useState<ScheduleDate[] | any>([])
   const [currentBundle, setCurrentBundle] = useState<ScheduleDateBundle>({} as ScheduleDateBundle)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const { schedule } = props
 
@@ -33,7 +35,7 @@ export const MovieComponent: FC<MovieProps> = (props: MovieProps) => {
   return (
     <>
       {schedule ? (
-        <div className="relative">
+        <div className="relative pb-12">
           <div className="relative w-full movie__thumbnail">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className="w-full h-full object-fit shadow rounded" src={thumbnail()} alt={schedule.id} />
@@ -62,7 +64,7 @@ export const MovieComponent: FC<MovieProps> = (props: MovieProps) => {
           {currentBundle && (
             <>
               <p className="mt-4 text-sm text-zinc-300 tracking-tight font-semibold">{currentDate.showDate}</p>
-              <p className="text-xs mt-2 text-zinc-400 font-semibold">
+              <p className="text-xs mt-2 text-zinc-400 tracking-tight">
                 <span className="bg-zinc-800 rounded-sm px-1.5 py-0.5">{currentBundle.caption === 'voice' ? 'Thuyết minh' : 'Phụ đề'}</span>
                 <span className="bg-indigo-800 rounded-sm px-1.5 py-0.5 ml-1">{currentBundle.version}</span>
               </p>
